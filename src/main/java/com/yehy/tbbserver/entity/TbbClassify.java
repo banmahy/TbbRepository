@@ -14,7 +14,8 @@ public class TbbClassify extends BaseEntity {
 
   @TableId(type = IdType.AUTO)
   private Integer id;
-  private Integer parentId;
+  private String classifyId;
+  private String parentId;
   private String materialName;
   private Double price;
   private String materialUnit;

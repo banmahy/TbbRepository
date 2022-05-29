@@ -12,7 +12,8 @@ import java.util.List;
 @Data
 public class TbbClassifyVo {
     private Integer id;
-    private Integer parentId;
+    private String classifyId;
+    private String parentId;
     private String materialName;
     private Double price;
     private String materialUnit;

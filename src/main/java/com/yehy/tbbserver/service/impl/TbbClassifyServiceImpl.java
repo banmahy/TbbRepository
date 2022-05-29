@@ -1,5 +1,6 @@
 package com.yehy.tbbserver.service.impl;
 
+import com.yehy.tbbserver.convert.TbbClassifyConvert;
 import com.yehy.tbbserver.entity.TbbClassify;
 import com.yehy.tbbserver.mapper.TbbClassifyMapper;
 import com.yehy.tbbserver.service.TbbClassifyService;
@@ -32,25 +33,7 @@ public class TbbClassifyServiceImpl implements TbbClassifyService {
 
     @Override
     public List<TbbClassifyVo> getAllList() {
-        List<TbbClassifyVo> parentList = mapper.getAllList(1);
-        List<TbbClassifyVo> tempList = new ArrayList<>();
-        for (TbbClassifyVo parent:parentList){
-            TbbClassifyVo entity = getChildList(parentList, parent);
-            tempList.add(entity);
-        }
-        return tempList;
+        List<TbbClassify> tbbClassifies = mapper.selectList(null);
+        return TbbClassifyConvert.tbbClassifyConvertToVo(tbbClassifies);
     }
-
-    private TbbClassifyVo getChildList(List<TbbClassifyVo> parentList, TbbClassifyVo parentEntity){
-        for (TbbClassifyVo parent : parentList) {
-            List<TbbClassifyVo> childList = mapper.getAllList(parent.getId());
-            if (childList.size() > 0){
-                parent.setChildren(childList);
-                getChildList(childList,parentEntity);
-            }
-        }
-        return parentEntity;
-    }
-
-
 }
