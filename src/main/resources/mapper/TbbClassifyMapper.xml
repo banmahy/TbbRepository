@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yehy.tbbserver.mapper.TbbClassifyMapper">
+    <sql id="Base_columns">
+        tc.id,
+        tc.parent_id,
+        tc.material_name,
+        tc.price,
+        tc.material_unit,
+        tc.description,
+        tc.image_id
+    </sql>
+
+    <!-- 查询列表 -->
+    <select id="getAllList" resultType="com.yehy.tbbserver.vo.TbbClassifyVo">
+        SELECT
+        <include refid="Base_columns"></include>
+        FROM
+        tbb_classify tc
+        where 1=1
+        <if test="parentId != '' and parentId != null">
+            and parent_id = #{parentId}
+        </if>
+        order by tc.material_name
+    </select>
+
+    <select id="getChildList" resultType="com.yehy.tbbserver.vo.TbbClassifyVo">
+        SELECT
+        <include refid="Base_columns"></include>
+        FROM
+        tbb_classify tc
+        where 1=1
+        <if test="id != '' and id != null">
+            and id = #{id}
+        </if>
+        order by tc.material_name
+    </select>
+</mapper>
