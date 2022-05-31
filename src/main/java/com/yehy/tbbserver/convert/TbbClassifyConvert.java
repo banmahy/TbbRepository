@@ -1,5 +1,6 @@
 package com.yehy.tbbserver.convert;
 
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.yehy.tbbserver.entity.TbbClassify;
 import com.yehy.tbbserver.vo.TbbClassifyVo;
 import org.springframework.beans.BeanUtils;
@@ -21,8 +22,12 @@ public class TbbClassifyConvert {
             BeanUtils.copyProperties(tbbClassify,tbbClassifyVo);
             tbbClassifyVos.add(tbbClassifyVo);
         }
+
         Map<String, List<TbbClassifyVo>> collect = new HashMap<>();
         for (TbbClassifyVo tbbClassifyVo : tbbClassifyVos) {
+            if (StringUtils.isEmpty(tbbClassifyVo.getParentId())){
+                continue;
+            }
             List<TbbClassifyVo> classifyList = collect.getOrDefault(tbbClassifyVo.getParentId(), new ArrayList<>());
             classifyList.add(tbbClassifyVo);
             collect.put(tbbClassifyVo.getParentId(), classifyList);

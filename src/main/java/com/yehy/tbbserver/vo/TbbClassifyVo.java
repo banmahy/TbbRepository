@@ -19,5 +19,6 @@ public class TbbClassifyVo {
     private String materialUnit;
     private String description;
     private Integer imageId;
+    private Integer level;
     private List<TbbClassifyVo> children;
 }

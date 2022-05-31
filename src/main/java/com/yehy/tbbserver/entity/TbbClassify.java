@@ -19,6 +19,7 @@ public class TbbClassify extends BaseEntity {
   private String materialName;
   private Double price;
   private String materialUnit;
+  private Integer level;
   /**
    * 施工工艺标准
    */
