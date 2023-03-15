@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * @author yehy
  */
@@ -14,15 +16,12 @@ public class TbbClassify extends BaseEntity {
 
   @TableId(type = IdType.AUTO)
   private Integer id;
-  private String classifyId;
   private String parentId;
   private String materialName;
-  private Double price;
+  private BigDecimal price;
   private String materialUnit;
-  private Integer level;
   /**
    * 施工工艺标准
    */
   private String description;
-  private Integer imageId;
 }

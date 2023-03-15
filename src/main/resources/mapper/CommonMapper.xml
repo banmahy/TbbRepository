@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yehy.tbbserver.mapper.CommonMapper">
+    <sql id="Base_columns">
+        id,
+        cd_index,
+        type_nm,
+        type_cd,
+        code_key1,
+        code_name1
+    </sql>
+
+
+    <select id="getCodeMst" resultType="com.yehy.tbbserver.entity.CodeMaster">
+        SELECT
+        <include refid="Base_columns"></include>
+        FROM
+        code_master
+        where 1=1
+        <if test="typeCd != '' and typeCd != null">
+            and type_cd = #{typeCd}
+        </if>
+        order by cd_index
+    </select>
+</mapper>

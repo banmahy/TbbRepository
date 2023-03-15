@@ -3,20 +3,63 @@
 <mapper namespace="com.yehy.tbbserver.mapper.TbbClassifyMapper">
     <sql id="Base_columns">
         tc.id,
-        tc.parent_id,
         tc.material_name,
+        tc.parent_id,
         tc.price,
         tc.material_unit,
         tc.description,
-        tc.image_id
     </sql>
 
+    <resultMap id="tbbClassifyMap" type="com.yehy.tbbserver.vo.TbbClassifyVo">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="material_name" property="materialName"/>
+        <result column="price" property="price"/>
+        <result column="material_unit" property="materialUnit"/>
+        <result column="description" property="description"/>
+        <result column="material_unit_nm" property="materialUnitNm"/>
+        <collection property="imageList" ofType="com.yehy.tbbserver.entity.TbbDocument">
+            <id column="docId" property="id"/>
+            <result column="file_name" property="fileName"/>
+            <result column="file_path" property="filePath"/>
+            <result column="name" property="name"/>
+        </collection>
+    </resultMap>
     <!-- 查询列表 -->
-    <select id="getAllList" resultType="com.yehy.tbbserver.vo.TbbClassifyVo">
+    <select id="getAllList" resultMap="tbbClassifyMap">
+        SELECT
+        <include refid="Base_columns"></include>
+        unit.code_name1 as material_unit_nm
+        ,doc.id as docId
+        ,doc.file_path
+        ,doc.file_name
+        ,doc.name
+        FROM
+        tbb_classify tc
+        left join code_master unit
+        on unit.type_cd = 'UNIT'
+        and code_key1 = tc.material_unit
+        left join tbb_document doc
+        on doc.record_id = tc.id
+        order by tc.material_name
+    </select>
+
+    <select id="getParentList" resultType="com.yehy.tbbserver.vo.TbbClassifyVo">
         SELECT
         <include refid="Base_columns"></include>
         FROM
         tbb_classify tc
+        where 1=1
+        <if test="parentId != '' and parentId != null">
+            and parent_id = #{parentId}
+        </if>
         order by tc.material_name
     </select>
+
+    <delete id="deleteClassifyByIds" parameterType="java.util.List">
+        delete from tbb_classify where id in
+        <foreach collection="ids" separator="," item="id" open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

@@ -15,25 +15,27 @@ import java.util.stream.Collectors;
 @Component
 public class TbbClassifyConvert {
 
-    public static List<TbbClassifyVo> tbbClassifyConvertToVo(List<TbbClassify> tbbClassifies) {
-        List<TbbClassifyVo> tbbClassifyVos = new ArrayList<>();
-        for (TbbClassify tbbClassify : tbbClassifies) {
-            TbbClassifyVo tbbClassifyVo = new TbbClassifyVo();
-            BeanUtils.copyProperties(tbbClassify,tbbClassifyVo);
-            tbbClassifyVos.add(tbbClassifyVo);
-        }
-
-        Map<String, List<TbbClassifyVo>> collect = new HashMap<>();
-        for (TbbClassifyVo tbbClassifyVo : tbbClassifyVos) {
-            if (StringUtils.isEmpty(tbbClassifyVo.getParentId())){
-                continue;
-            }
-            List<TbbClassifyVo> classifyList = collect.getOrDefault(tbbClassifyVo.getParentId(), new ArrayList<>());
-            classifyList.add(tbbClassifyVo);
-            collect.put(tbbClassifyVo.getParentId(), classifyList);
-        }
-        return tbbClassifyVos.stream()
-                .peek(x -> x.setChildren(collect.get(x.getClassifyId())))
-                .collect(Collectors.toList());
-    }
+//    public static List<TbbClassifyVo> tbbClassifyConvertToVo(List<TbbClassify> tbbClassifies) {
+//        List<TbbClassifyVo> tbbClassifyVos = new ArrayList<>();
+//        for (TbbClassify tbbClassify : tbbClassifies) {
+//            TbbClassifyVo tbbClassifyVo = new TbbClassifyVo();
+//            BeanUtils.copyProperties(tbbClassify,tbbClassifyVo);
+//            tbbClassifyVos.add(tbbClassifyVo);
+//        }
+//
+//        Map<String, List<TbbClassifyVo>> collect = new HashMap<>();
+//        for (TbbClassifyVo tbbClassifyVo : tbbClassifyVos) {
+//            if (StringUtils.equals("0",tbbClassifyVo.getParentId())){
+//                continue;
+//            }
+//            List<TbbClassifyVo> classifyList = collect.getOrDefault(tbbClassifyVo.getParentId(), new ArrayList<>());
+//            classifyList.add(tbbClassifyVo);
+//            collect.put(tbbClassifyVo.getParentId(), classifyList);
+//            collect.put(tbbClassifyVo.getParentId(), classifyList);
+//        }
+//        return tbbClassifyVos.stream()
+//                .peek(x -> x.setChildren(collect.get(x.getClassifyId())))
+//                .filter(x->StringUtils.equals("0",x.getParentId()))
+//                .collect(Collectors.toList());
+//    }
 }

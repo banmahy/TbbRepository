@@ -11,4 +11,7 @@ import java.util.List;
 @Repository
 public interface TbbClassifyMapper extends BaseMapper<TbbClassify> {
 
+    List<TbbClassifyVo> getAllList();
+    List<TbbClassifyVo> getParentList(@Param("parentId") String parentId);
+    void deleteClassifyByIds(@Param("ids") List<String> ids);
 }

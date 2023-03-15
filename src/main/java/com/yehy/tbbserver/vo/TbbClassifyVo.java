@@ -1,7 +1,9 @@
 package com.yehy.tbbserver.vo;
 
+import com.yehy.tbbserver.entity.TbbDocument;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -12,13 +14,13 @@ import java.util.List;
 @Data
 public class TbbClassifyVo {
     private Integer id;
-    private String classifyId;
     private String parentId;
     private String materialName;
-    private Double price;
+    private BigDecimal price;
     private String materialUnit;
+    private String materialUnitNm;
     private String description;
-    private Integer imageId;
-    private Integer level;
     private List<TbbClassifyVo> children;
+    private List<TbbDocument> imageList;
+
 }
